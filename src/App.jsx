@@ -5,6 +5,10 @@ import { nanoid } from 'nanoid'
 
 import Items from './Items'
 
+const setLocalStorage = (items) => {
+  localStorage.setItem('list', JSON.stringify(items))
+}
+
 const App = () => {
   const [items, setItems] = useState([])
 
@@ -14,11 +18,15 @@ const App = () => {
       name: itemName,
       completed: false,
     }
-    setItems([...items, newItem])
+    const newItems = [...items, newItem]
+    setLocalStorage(newItems)
+    setItems(newItems)
   }
 
   const removeItem = (itemId) => {
-    setItems(items.filter((item) => item.id !== itemId))
+    const newItems = items.filter((item) => item.id !== itemId)
+    setLocalStorage(newItems)
+    setItems(newItems)
   }
 
   return (
